@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "72781b38-d845-4307-9787-8b99f67c2cc8": {
+      "ProjectGuid": "72781b38-d845-4307-9787-8b99f67c2cc8",
+      "DisplayName": "WebApiBiblioteca",
+      "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Archivos varios",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 1
+}
