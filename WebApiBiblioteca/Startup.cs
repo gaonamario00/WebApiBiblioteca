@@ -70,8 +70,10 @@ namespace WebApiBiblioteca
             //    }
             //});
             ////////////////////
+            //* Marca Error
             //app.UseMiddleware<ResponseHttpMiddleware>();
             //app.UseResponseHttpMiddleware();
+            //*
             ////////////////////
             //Se ejecuta la pagina web solamente mostrando el mensaje
             //app.Run(async context =>
