@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApiBiblioteca.Entidades;
+using WebApiBiblioteca.Interfaces;
 
 namespace WebApiBiblioteca.Controllers
 {
@@ -10,22 +11,56 @@ namespace WebApiBiblioteca.Controllers
     public class LibrosController : ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
-        public LibrosController(ApplicationDbContext context)
+        private readonly IService service;
+        private readonly ServiceTransient serviceTransient;
+        private readonly ServiceScoped serviceScoped;
+        private readonly ServiceSingleton serviceSingleton;
+        private readonly ILogger<LibrosController> logger;
+        public LibrosController(ApplicationDbContext context, IService service,
+            ServiceTransient serviceTransient, ServiceScoped serviceScoped,
+            ServiceSingleton serviceSingleton, ILogger<LibrosController> logger)
         {
             this.dbContext = context;
+            this.service = service;
+            this.serviceTransient = serviceTransient;
+            this.serviceScoped = serviceScoped;
+            this.serviceSingleton = serviceSingleton;
+            this.logger = logger;
         }
-
-
-        /*
+        [HttpGet("GUID")]
+        public ActionResult ObtenerGuid()
+        {
+            return Ok(new
+            {
+                LibrosControllerTransient = serviceTransient.guid,
+                ServiceA_Transient = service.GetTransient(),
+                LibrosControllerScoped = serviceScoped.guid,
+                ServiceA_Scoped = service.GetScoped(),
+                LibrosControllerSingleton = serviceSingleton.guid,
+                ServiceA_Singleton = service.GetSingleton()
+            }) ;
+        }        
 
         [HttpGet] //   /api/libros
         [HttpGet("listado")] //   /api/libros/listado
         [HttpGet("/listado")] //  /listado
         public async Task<ActionResult<List<Libros>>> Get()
         {
+            // Es importante especificar hasta que nivel se ocupan para que no muestre informacion delicada
+            // El appsetting.Development se define el nivel de manejo de logs
+            // * Niveles de logs
+            // Critical
+            // Error
+            // Warning
+            // Information - Configuration actual
+            // Debug
+            // Trace
+            logger.LogInformation("Se obtiene el listado de alumnos");
+            logger.LogWarning("Se obtiene el listado de alumnos!");
+            service.ejecutarJob();
             return await dbContext.libros.Include(x=>x.autores).ToListAsync();
         }
-        */
+        
         /*
         [HttpGet]
         public List<Libros> Get()
@@ -51,10 +86,10 @@ namespace WebApiBiblioteca.Controllers
         {
             return await dbContext.libros.FirstOrDefaultAsync();
         }
-
+        */
         
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<Libros>> Get(int id)
+        public async Task<ActionResult<Libros>> GetOne(int id)
         {
             var libros =  await dbContext.libros.FirstOrDefaultAsync(x => x.id == id);
 
@@ -63,24 +98,27 @@ namespace WebApiBiblioteca.Controllers
                 return NotFound();
             }
 
+            logger.LogWarning("Se obtiene el libro con ID: "+id);
+
             return libros;
         }
         
-
+        
       
-        */
+       
 
         [HttpGet("{titulo}")]
-        public async Task<ActionResult<Libros>> Get( [FromRoute] string titulo)
+        public async Task<ActionResult<Libros>> GetLibroBytitulo( [FromRoute] string titulo)
         {
             var libros = await dbContext.libros.FirstOrDefaultAsync(x => x.titulo.Contains(titulo));
             if (libros == null)
             {
+                logger.LogError("No se ha encontrado el registro!!");
                 return NotFound();
             }
             return libros;
         }
-  
+        
 
         [HttpGet("primero")]
         public async Task<ActionResult<Libros>> PrimerLibro([FromHeader] int valor, [FromQuery] string libro, [FromQuery] string libroId)
@@ -91,6 +129,14 @@ namespace WebApiBiblioteca.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] Libros libro)
         {
+
+            var existeLibroMismotitulo = await dbContext.libros.AnyAsync(x => x.titulo == libro.titulo);
+
+            if (existeLibroMismotitulo)
+            {
+                return BadRequest("Ya existe un libro con el mismo titulo");
+            }
+
             dbContext.Add(libro);
             await dbContext.SaveChangesAsync();
             return Ok();
