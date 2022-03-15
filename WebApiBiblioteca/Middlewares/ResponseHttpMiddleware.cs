@@ -1,4 +1,6 @@
-﻿namespace WebApiBiblioteca.Middlewares
+﻿using System.IO;
+
+namespace WebApiBiblioteca.Middlewares
 {
     public static class MiddlewareExtensions
     {
@@ -21,25 +23,25 @@
 
         public async Task InvokeAsync(HttpContext context)
         {
-            using (var as = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
                 //se asinga el body del responde en una variable y se le da el valor de memorystream
-                var bodyoriginal = context.response.body;
-                context.response.body = as;
+                var bodyoriginal = context.Response.Body;
+                context.Response.Body = ms;
 
                 //permite continuar con la linea
-                await siguiente.invoke();
+                await siguiente(context);
 
                 //guardamos lo que le respondemos al cliente en el string
-                as.seek(0, seekorigin.begin);
-                string response = new streamreader(as).readtoend();
-                as.seek(0, seekorigin.begin);
+                ms.Seek(0, SeekOrigin.Begin);
+                string response = new StreamReader(ms).ReadToEnd();
+                ms.Seek(0, SeekOrigin.Begin);
 
                 //leemos el stream y lo colocamos como estaba
-                await as.copytoasync(bodyoriginal);
-                context.response.body = bodyoriginal;
+                await ms.CopyToAsync(bodyoriginal);
+                context.Response.Body = bodyoriginal;
 
-                logger.loginformation(response);
+                logger.LogInformation(response);
 
             }
         }

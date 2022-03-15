@@ -43,31 +43,33 @@ namespace WebApiBiblioteca
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env
+             ILogger<Startup> logger
+            )
         {
             //app.Use(async (context, siguiente) =>
             //{
-            //    using (var as = new MemoryStream())
-            //    {
-            //        //Se asinga el body del responde en una variable y se le da el valor de memoryStream
-            //        var bodyOriginal = context.Response.Body;
-            //        context.Response.Body = as;
+            //using (var ms = new MemoryStream())
+            //{
+            //    //se asinga el body del responde en una variable y se le da el valor de memorystream
+            //    var bodyoriginal = context.Response.Body;
+            //    context.Response.Body = ms;
 
-            //        //Permite continuar con la linea
-            //        await siguiente.Invoke();
+            //    //permite continuar con la linea
+            //    await siguiente(context);
 
-            //        //Guardamos lo que le respondemos al cliente en el string
-            //        as.Seek(0, SeekOrigin.Begin);
-            //        string response = new StreamReader(as).ReadToEnd();
-            //        as.Seek(0, SeekOrigin.Begin);
+            //    //guardamos lo que le respondemos al cliente en el string
+            //    ms.Seek(0, SeekOrigin.Begin);
+            //    string response = new StreamReader(ms).ReadToEnd();
+            //    ms.Seek(0, SeekOrigin.Begin);
 
-            //        //Leemos el stream y lo colocamos como estaba
-            //        await as.CopyToAsync(bodyOriginal);
-            //        context.Response.Body = bodyOriginal;
+            //    //leemos el stream y lo colocamos como estaba
+            //    await ms.CopyToAsync(bodyoriginal);
+            //    context.Response.Body = bodyoriginal;
 
-            //        logger.LogInformation(response);
+            //    logger.LogInformation(response);
 
-            //    }
+            //}
             //});
             ////////////////////
             //* Marca Error
