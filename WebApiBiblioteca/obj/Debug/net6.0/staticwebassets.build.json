@@ -1,11 +1,37 @@
 {
   "Version": 1,
-  "Hash": "nI6MUI4I0/iUvN/qfOa4EKRM46G01t021sP2Ih4WOqI=",
+  "Hash": "bsJ2gryuAnZq4tI2gyvYVOo6n5rQV65xd/kObw4IeAg=",
   "Source": "WebApiBiblioteca",
   "BasePath": "_content/WebApiBiblioteca",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "WebApiBiblioteca\\wwwroot",
+      "Source": "WebApiBiblioteca",
+      "ContentRoot": "C:\\Users\\Lenovo\\source\\repos\\WebApiBiblioteca\\WebApiBiblioteca\\wwwroot\\",
+      "BasePath": "_content/WebApiBiblioteca",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\Lenovo\\source\\repos\\WebApiBiblioteca\\WebApiBiblioteca\\wwwroot\\Tarea 1.txt",
+      "SourceId": "WebApiBiblioteca",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Lenovo\\source\\repos\\WebApiBiblioteca\\WebApiBiblioteca\\wwwroot\\",
+      "BasePath": "_content/WebApiBiblioteca",
+      "RelativePath": "Tarea 1.txt",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Tarea 1.txt"
+    }
+  ]
 }

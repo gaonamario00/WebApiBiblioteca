@@ -120,3 +120,5 @@ C:\Users\Lenovo\source\repos\WebApiBiblioteca\WebApiBiblioteca\obj\Debug\net6.0\
 C:\Users\Lenovo\source\repos\WebApiBiblioteca\WebApiBiblioteca\obj\Debug\net6.0\WebApiBiblioteca.pdb
 C:\Users\Lenovo\source\repos\WebApiBiblioteca\WebApiBiblioteca\obj\Debug\net6.0\WebApiBiblioteca.genruntimeconfig.cache
 C:\Users\Lenovo\source\repos\WebApiBiblioteca\WebApiBiblioteca\obj\Debug\net6.0\ref\WebApiBiblioteca.dll
+C:\Users\Lenovo\source\repos\WebApiBiblioteca\WebApiBiblioteca\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Lenovo\source\repos\WebApiBiblioteca\WebApiBiblioteca\bin\Debug\net6.0\WebApiBiblioteca.staticwebassets.runtime.json

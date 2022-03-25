@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApiBiblioteca.Entidades;
+using WebApiBiblioteca.Filtros;
 using WebApiBiblioteca.Interfaces;
 
 namespace WebApiBiblioteca.Controllers
@@ -8,6 +10,7 @@ namespace WebApiBiblioteca.Controllers
 
     [ApiController]
     [Route("api/libros")]
+    //[Authorize]
     public class LibrosController : ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
@@ -28,6 +31,8 @@ namespace WebApiBiblioteca.Controllers
             this.logger = logger;
         }
         [HttpGet("GUID")]
+        [ResponseCache(Duration = 10)]
+        [ServiceFilter(typeof(FiltroDeAccion))]
         public ActionResult ObtenerGuid()
         {
             return Ok(new
@@ -38,12 +43,14 @@ namespace WebApiBiblioteca.Controllers
                 ServiceA_Scoped = service.GetScoped(),
                 LibrosControllerSingleton = serviceSingleton.guid,
                 ServiceA_Singleton = service.GetSingleton()
-            }) ;
-        }        
+            });
+        }
 
         [HttpGet] //   /api/libros
         [HttpGet("listado")] //   /api/libros/listado
         [HttpGet("/listado")] //  /listado
+        //[ResponseCache(Duration = 15)]
+        //[Authorize]
         public async Task<ActionResult<List<Libros>>> Get()
         {
             // Es importante especificar hasta que nivel se ocupan para que no muestre informacion delicada
@@ -55,6 +62,7 @@ namespace WebApiBiblioteca.Controllers
             // Information - Configuration actual
             // Debug
             // Trace
+            //throw new NotImplementedException();
             logger.LogInformation("Se obtiene el listado de alumnos");
             logger.LogWarning("Se obtiene el listado de alumnos!");
             service.ejecutarJob();
